@@ -1,0 +1,6 @@
+{
+  "name": "MoneyFlow",
+  "description": "Privacy-first personal finance and money management app",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
