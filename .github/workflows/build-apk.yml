@@ -22,7 +22,7 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
-      - name: 3. Validate Android Project & Gradle Wrapper
+      - name: 3. Validate Android Project Structure
         run: |
           if [ ! -f "settings.gradle.kts" ] && [ ! -f "settings.gradle" ]; then
             echo "::error::Android project root or settings.gradle(.kts) not found!"
@@ -32,22 +32,26 @@ jobs:
             echo "::error::Application module 'app' directory not found!"
             exit 1
           fi
+
+      - name: 4. Ensure Gradle Wrapper Exists
+        run: |
           if [ ! -f "gradlew" ]; then
-            echo "::error::Gradle wrapper 'gradlew' not found!"
-            exit 1
+            echo "gradlew wrapper not found in repository. Installing system Gradle to generate wrapper..."
+            sudo apt-get update && sudo apt-get install -y gradle
+            gradle wrapper
           fi
           chmod +x gradlew
 
-      - name: 4. Remove Stale Caches
+      - name: 5. Remove Stale Caches
         run: |
           echo "Removing stale .gradle and build caches..."
           rm -rf .gradle app/build
 
-      - name: 5. Build Debug APK
+      - name: 6. Build Debug APK
         run: |
           ./gradlew assembleDebug --stacktrace --no-daemon
 
-      - name: 6. Locate and Verify APK
+      - name: 7. Locate and Verify APK
         id: locate_apk
         run: |
           APK_PATH=$(find app/build/outputs/apk/debug -name "*.apk" | head -n 1)
@@ -58,7 +62,7 @@ jobs:
           echo "Found APK at: $APK_PATH"
           echo "apk_path=$APK_PATH" >> $GITHUB_OUTPUT
 
-      - name: 7. Upload APK Artifact
+      - name: 8. Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: android-app-debug-apk
