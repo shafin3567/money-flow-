@@ -33,12 +33,14 @@ jobs:
             exit 1
           fi
 
-      - name: 4. Ensure Gradle Wrapper Exists
+      - name: 4. Setup Gradle 9.3.1 Wrapper
         run: |
           if [ ! -f "gradlew" ]; then
-            echo "gradlew wrapper not found in repository. Installing system Gradle to generate wrapper..."
-            sudo apt-get update && sudo apt-get install -y gradle
-            gradle wrapper
+            echo "Downloading Gradle 9.3.1 to generate compatible wrapper..."
+            wget -q https://services.gradle.org/distributions/gradle-9.3.1-bin.zip
+            unzip -q gradle-9.3.1-bin.zip
+            gradle-9.3.1/bin/gradle wrapper --gradle-version 9.3.1
+            rm -rf gradle-9.3.1 gradle-9.3.1-bin.zip
           fi
           chmod +x gradlew
 
