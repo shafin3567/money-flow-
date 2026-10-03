@@ -26,19 +26,19 @@ import androidx.compose.material.icons.filled.AttachMoney
 import androidx.compose.material.icons.filled.CloudDownload
 import androidx.compose.material.icons.filled.EventRepeat
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Savings
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import com.example.ui.components.MoneyFlowTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -69,6 +69,7 @@ fun MoreScreen(
     onNavigateToRecurring: () -> Unit,
     onNavigateToAnalytics: () -> Unit,
     onNavigateToBackup: () -> Unit,
+    onNavigateToNotifications: () -> Unit,
     onUpdateCurrency: (String) -> Unit,
     onUpdateSecurity: (enabled: Boolean, pin: String, useBiometrics: Boolean) -> Unit,
     modifier: Modifier = Modifier
@@ -161,6 +162,14 @@ fun MoreScreen(
                             title = "Primary Currency",
                             subtitle = "Current: ${userPreferences.defaultCurrency}",
                             onClick = { showCurrencyDialog = true }
+                        )
+                        Spacer(modifier = Modifier.height(14.dp))
+                        MoreItemRow(
+                            icon = Icons.Default.Notifications,
+                            sphereColor = Color(0xFF7FA7C4),
+                            title = "Notifications",
+                            subtitle = "Recurring bills, budgets, goals & summaries",
+                            onClick = onNavigateToNotifications
                         )
                         Spacer(modifier = Modifier.height(14.dp))
                         MoreItemRow(
@@ -384,7 +393,7 @@ private fun SecurityConfigDialog(
 
             if (isEnabled) {
                 Spacer(modifier = Modifier.height(16.dp))
-                OutlinedTextField(
+                MoneyFlowTextField(
                     value = pin,
                     onValueChange = {
                         if (it.length <= 6 && it.all { c -> c.isDigit() }) {
@@ -394,12 +403,8 @@ private fun SecurityConfigDialog(
                     },
                     label = { Text("Set 4-6 digit PIN") },
                     isError = errorText != null,
-                    supportingText = errorText?.let { { Text(it, color = colors.error) } },
+                    supportingText = errorText?.let { { Text(it, color = colors.inputError) } },
                     shape = RoundedCornerShape(16.dp),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = colors.primary,
-                        unfocusedBorderColor = colors.border
-                    ),
                     modifier = Modifier.fillMaxWidth()
                 )
 

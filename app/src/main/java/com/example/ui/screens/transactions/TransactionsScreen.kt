@@ -28,9 +28,8 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import com.example.ui.components.MoneyFlowTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -144,13 +143,12 @@ fun TransactionsScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Search Bar with Claymorphic Container
-                OutlinedTextField(
+                MoneyFlowTextField(
                     value = filterState.searchQuery,
                     onValueChange = onSearchQueryChange,
                     placeholder = {
                         Text(
                             "Search note, merchant...",
-                            color = colors.textTertiary,
                             maxLines = 1,
                             softWrap = false
                         )
@@ -159,7 +157,7 @@ fun TransactionsScreen(
                         Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = null,
-                            tint = colors.textSecondary
+                            tint = colors.inputIcon
                         )
                     },
                     trailingIcon = {
@@ -168,7 +166,7 @@ fun TransactionsScreen(
                                 Icon(
                                     imageVector = Icons.Default.Clear,
                                     contentDescription = "Clear search",
-                                    tint = colors.textSecondary,
+                                    tint = colors.inputIcon,
                                     modifier = Modifier.size(18.dp)
                                 )
                             }
@@ -183,14 +181,9 @@ fun TransactionsScreen(
                             spotColor = colors.shadow
                         ),
                     shape = RoundedCornerShape(22.dp),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color(0xFF7FA7C4),
-                        unfocusedBorderColor = Color.Transparent,
-                        focusedContainerColor = if (colors.isDark) colors.surfaceElevated else Color.White,
-                        unfocusedContainerColor = if (colors.isDark) colors.surfaceElevated else Color.White,
-                        focusedTextColor = colors.textPrimary,
-                        unfocusedTextColor = colors.textPrimary
-                    ),
+                    containerColor = colors.inputBackground,
+                    focusedBorderColor = colors.inputFocusedBorder,
+                    unfocusedBorderColor = colors.inputBorder,
                     singleLine = true
                 )
 

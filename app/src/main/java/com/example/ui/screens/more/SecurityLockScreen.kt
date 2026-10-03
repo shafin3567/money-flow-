@@ -34,12 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.ui.theme.CreamBackground
-import com.example.ui.theme.NegativeCoral
-import com.example.ui.theme.PowderBlue
-import com.example.ui.theme.PowderBlueAccent
-import com.example.ui.theme.TextPrimary
-import com.example.ui.theme.TextSecondary
+import com.example.ui.theme.MoneyFlowTheme
 
 @Composable
 fun SecurityLockScreen(
@@ -48,13 +43,14 @@ fun SecurityLockScreen(
     canUseBiometrics: Boolean,
     modifier: Modifier = Modifier
 ) {
+    val colors = MoneyFlowTheme.colors
     var enteredPin by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
 
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(CreamBackground)
+            .background(colors.background)
             .statusBarsPadding()
     ) {
         Column(
@@ -72,13 +68,13 @@ fun SecurityLockScreen(
                     modifier = Modifier
                         .size(76.dp)
                         .clip(CircleShape)
-                        .background(PowderBlue.copy(alpha = 0.5f)),
+                        .background(colors.primaryContainer),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.Lock,
                         contentDescription = null,
-                        tint = PowderBlueAccent,
+                        tint = colors.primary,
                         modifier = Modifier.size(36.dp)
                     )
                 }
@@ -89,7 +85,7 @@ fun SecurityLockScreen(
                     text = "MoneyFlow is Locked",
                     style = MaterialTheme.typography.headlineLarge.copy(
                         fontWeight = FontWeight.Bold,
-                        color = TextPrimary
+                        color = colors.textPrimary
                     )
                 )
 
@@ -98,7 +94,7 @@ fun SecurityLockScreen(
                 Text(
                     text = if (isError) "Incorrect PIN, please try again" else "Enter your 4-digit security PIN",
                     style = MaterialTheme.typography.bodyMedium.copy(
-                        color = if (isError) NegativeCoral else TextSecondary,
+                        color = if (isError) colors.inputError else colors.textSecondary,
                         fontWeight = if (isError) FontWeight.SemiBold else FontWeight.Normal
                     ),
                     textAlign = TextAlign.Center
@@ -116,9 +112,9 @@ fun SecurityLockScreen(
                                 .clip(CircleShape)
                                 .background(
                                     when {
-                                        isError -> NegativeCoral
-                                        filled -> PowderBlueAccent
-                                        else -> Color(0x3323272F)
+                                        isError -> colors.inputError
+                                        filled -> colors.primary
+                                        else -> colors.inputBorder
                                     }
                                 )
                         )
@@ -160,7 +156,7 @@ fun SecurityLockScreen(
                                             Icon(
                                                 imageVector = Icons.Default.Fingerprint,
                                                 contentDescription = "Biometric Unlock",
-                                                tint = PowderBlueAccent,
+                                                tint = colors.primary,
                                                 modifier = Modifier.size(34.dp)
                                             )
                                         }
@@ -184,7 +180,7 @@ fun SecurityLockScreen(
                                         Icon(
                                             imageVector = Icons.Default.Backspace,
                                             contentDescription = "Backspace",
-                                            tint = TextSecondary,
+                                            tint = colors.inputIcon,
                                             modifier = Modifier.size(26.dp)
                                         )
                                     }
@@ -194,7 +190,7 @@ fun SecurityLockScreen(
                                         modifier = Modifier
                                             .size(72.dp)
                                             .clip(CircleShape)
-                                            .background(Color.White)
+                                            .background(colors.surfaceElevated)
                                             .clickable {
                                                 if (enteredPin.length < 4) {
                                                     val newPin = enteredPin + key
@@ -216,7 +212,7 @@ fun SecurityLockScreen(
                                             style = MaterialTheme.typography.headlineLarge.copy(
                                                 fontWeight = FontWeight.SemiBold,
                                                 fontSize = 26.sp,
-                                                color = TextPrimary
+                                                color = colors.inputText
                                             )
                                         )
                                     }

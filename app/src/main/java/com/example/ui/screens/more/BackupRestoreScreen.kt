@@ -32,10 +32,10 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import com.example.ui.components.MoneyFlowTextField
+import com.example.ui.theme.MoneyFlowTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -52,14 +52,10 @@ import androidx.compose.ui.unit.dp
 import com.example.data.repository.BackupMetadata
 import com.example.ui.components.MoneyFlowCard
 import com.example.ui.components.PrimaryButton
-import com.example.ui.theme.CreamBackground
 import com.example.ui.theme.NegativeCoral
 import com.example.ui.theme.PositiveGreen
 import com.example.ui.theme.PowderBlue
 import com.example.ui.theme.PowderBlueAccent
-import com.example.ui.theme.TextPrimary
-import com.example.ui.theme.TextSecondary
-import com.example.ui.theme.TextTertiary
 import kotlinx.coroutines.launch
 
 @Composable
@@ -69,6 +65,7 @@ fun BackupRestoreScreen(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val colors = MoneyFlowTheme.colors
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
@@ -80,7 +77,7 @@ fun BackupRestoreScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(CreamBackground),
+            .background(colors.background),
         contentPadding = PaddingValues(bottom = 60.dp)
     ) {
         item {
@@ -99,12 +96,12 @@ fun BackupRestoreScreen(
                         modifier = Modifier
                             .size(40.dp)
                             .clip(CircleShape)
-                            .background(Color.White)
+                            .background(colors.surfaceElevated)
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
-                            tint = TextPrimary
+                            tint = colors.textPrimary
                         )
                     }
 
@@ -115,12 +112,12 @@ fun BackupRestoreScreen(
                             text = "Backup & Restore",
                             style = MaterialTheme.typography.headlineLarge.copy(
                                 fontWeight = FontWeight.Bold,
-                                color = TextPrimary
+                                color = colors.textPrimary
                             )
                         )
                         Text(
                             text = "100% offline local data portability",
-                            style = MaterialTheme.typography.bodySmall.copy(color = TextSecondary)
+                            style = MaterialTheme.typography.bodySmall.copy(color = colors.textSecondary)
                         )
                     }
                 }
@@ -153,12 +150,12 @@ fun BackupRestoreScreen(
                                     text = "Export Local Backup",
                                     style = MaterialTheme.typography.titleMedium.copy(
                                         fontWeight = FontWeight.Bold,
-                                        color = TextPrimary
+                                        color = colors.textPrimary
                                     )
                                 )
                                 Text(
                                     text = "Generates complete JSON backup of accounts, transactions, and budgets",
-                                    style = MaterialTheme.typography.bodySmall.copy(color = TextSecondary)
+                                    style = MaterialTheme.typography.bodySmall.copy(color = colors.textSecondary)
                                 )
                             }
                         }
@@ -219,34 +216,31 @@ fun BackupRestoreScreen(
                                     text = "Restore from Backup",
                                     style = MaterialTheme.typography.titleMedium.copy(
                                         fontWeight = FontWeight.Bold,
-                                        color = TextPrimary
+                                        color = colors.textPrimary
                                     )
                                 )
                                 Text(
                                     text = "Paste a MoneyFlow JSON backup to restore your data",
-                                    style = MaterialTheme.typography.bodySmall.copy(color = TextSecondary)
+                                    style = MaterialTheme.typography.bodySmall.copy(color = colors.textSecondary)
                                 )
                             }
                         }
 
                         Spacer(modifier = Modifier.height(16.dp))
 
-                        OutlinedTextField(
+                        MoneyFlowTextField(
                             value = restoreJsonInput,
                             onValueChange = {
                                 restoreJsonInput = it
                                 restoreResult = null
                             },
                             placeholder = { Text("Paste valid MoneyFlow JSON here...") },
+                            singleLine = false,
                             maxLines = 6,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(120.dp),
-                            shape = RoundedCornerShape(16.dp),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = PowderBlueAccent,
-                                unfocusedBorderColor = Color(0x2223272F)
-                            )
+                            shape = RoundedCornerShape(16.dp)
                         )
 
                         Spacer(modifier = Modifier.height(14.dp))
@@ -312,7 +306,7 @@ fun BackupRestoreScreen(
             },
             dismissButton = {
                 TextButton(onClick = { showRestoreConfirm = false }) {
-                    Text("Cancel", color = TextSecondary)
+                    Text("Cancel", color = colors.textSecondary)
                 }
             }
         )

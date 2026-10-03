@@ -26,9 +26,9 @@ import androidx.compose.material.icons.filled.ReceiptLong
 import androidx.compose.material.icons.filled.SwapHoriz
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import com.example.ui.components.MoneyFlowTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -458,7 +458,7 @@ fun HomeScreen(
                         style = MaterialTheme.typography.bodyMedium.copy(color = colors.textSecondary)
                     )
                     Spacer(modifier = Modifier.height(12.dp))
-                    OutlinedTextField(
+                    MoneyFlowTextField(
                         value = moneyAmountText,
                         onValueChange = { moneyAmountText = it },
                         label = { Text("Amount (${curr.symbol})") },

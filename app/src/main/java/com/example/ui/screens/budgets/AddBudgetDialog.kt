@@ -24,10 +24,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import com.example.ui.components.MoneyFlowTextField
+import com.example.ui.theme.MoneyFlowTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -46,8 +46,6 @@ import com.example.data.model.CurrencyData
 import com.example.ui.components.CategoryIconBadge
 import com.example.ui.components.PrimaryButton
 import com.example.ui.theme.PowderBlueAccent
-import com.example.ui.theme.TextPrimary
-import com.example.ui.theme.TextSecondary
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -63,12 +61,13 @@ fun AddBudgetDialog(
     var errorText by remember { mutableStateOf<String?>(null) }
 
     val curr = CurrencyData.getByCode(currencyCode)
+    val colors = MoneyFlowTheme.colors
     val expenseCategories = remember(categories) { categories.filter { it.type == "EXPENSE" } }
 
     BasicAlertDialog(onDismissRequest = onDismissRequest) {
         Surface(
             shape = RoundedCornerShape(32.dp),
-            color = Color.White,
+            color = colors.surfaceElevated,
             tonalElevation = 6.dp,
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -86,7 +85,7 @@ fun AddBudgetDialog(
                         text = "Create Budget",
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            color = TextPrimary
+                            color = colors.textPrimary
                         ),
                         maxLines = 1,
                         softWrap = false,
@@ -98,12 +97,12 @@ fun AddBudgetDialog(
                         modifier = Modifier
                             .size(34.dp)
                             .clip(CircleShape)
-                            .background(Color(0xFFF4EFE6))
+                            .background(if (colors.isDark) colors.surfaceSubtle else Color(0xFFF4EFE6))
                     ) {
                         Icon(
                             imageVector = Icons.Default.Close,
                             contentDescription = "Close",
-                            tint = TextSecondary,
+                            tint = colors.textSecondary,
                             modifier = Modifier.size(16.dp)
                         )
                     }
@@ -112,7 +111,7 @@ fun AddBudgetDialog(
                 Spacer(modifier = Modifier.height(18.dp))
 
                 // Monthly Limit
-                OutlinedTextField(
+                MoneyFlowTextField(
                     value = limitText,
                     onValueChange = { input ->
                         if (input.matches(Regex("""^\d*([.,]\d{0,2})?$"""))) {
@@ -125,17 +124,13 @@ fun AddBudgetDialog(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = PowderBlueAccent,
-                        unfocusedBorderColor = Color(0x2223272F)
-                    ),
                     singleLine = true
                 )
 
                 Spacer(modifier = Modifier.height(14.dp))
 
                 // Optional custom name
-                OutlinedTextField(
+                MoneyFlowTextField(
                     value = name,
                     onValueChange = { name = it },
                     label = { Text("Budget Name (Optional)") },
@@ -152,7 +147,7 @@ fun AddBudgetDialog(
                     text = "Apply to Category",
                     style = MaterialTheme.typography.labelMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        color = TextSecondary
+                        color = colors.textSecondary
                     )
                 )
 
@@ -168,7 +163,7 @@ fun AddBudgetDialog(
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(16.dp))
-                            .background(if (isOverall) PowderBlueAccent else Color(0xFFF5EFE6))
+                            .background(if (isOverall) PowderBlueAccent else if (colors.isDark) colors.surfaceSubtle else Color(0xFFF5EFE6))
                             .clickable { selectedCategoryId = null }
                             .padding(horizontal = 12.dp, vertical = 8.dp)
                     ) {
@@ -176,7 +171,7 @@ fun AddBudgetDialog(
                             text = "Overall Monthly",
                             style = MaterialTheme.typography.bodySmall.copy(
                                 fontWeight = if (isOverall) FontWeight.Bold else FontWeight.Medium,
-                                color = if (isOverall) Color.White else TextPrimary
+                                color = if (isOverall) Color.White else colors.textPrimary
                             ),
                             maxLines = 1,
                             softWrap = false
@@ -188,7 +183,7 @@ fun AddBudgetDialog(
                         Row(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(16.dp))
-                                .background(if (isSelected) PowderBlueAccent else Color(0xFFF5EFE6))
+                                .background(if (isSelected) PowderBlueAccent else if (colors.isDark) colors.surfaceSubtle else Color(0xFFF5EFE6))
                                 .clickable {
                                     selectedCategoryId = cat.id
                                     if (name.isBlank()) name = cat.name
@@ -207,7 +202,7 @@ fun AddBudgetDialog(
                                 text = cat.name,
                                 style = MaterialTheme.typography.bodySmall.copy(
                                     fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-                                    color = if (isSelected) Color.White else TextPrimary
+                                    color = if (isSelected) Color.White else colors.textPrimary
                                 ),
                                 maxLines = 1,
                                 softWrap = false

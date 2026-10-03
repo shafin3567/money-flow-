@@ -36,7 +36,12 @@ private fun createM3Light(mf: MoneyFlowColors) = lightColorScheme(
     onSurface = mf.textPrimary,
     surfaceVariant = mf.surfaceVariant,
     onSurfaceVariant = mf.textSecondary,
-    outline = mf.border
+    outline = mf.inputBorder,
+    outlineVariant = mf.border,
+    error = mf.error,
+    onError = Color.White,
+    errorContainer = mf.errorContainer,
+    onErrorContainer = mf.error
 )
 
 private fun createM3Dark(mf: MoneyFlowColors) = darkColorScheme(
@@ -56,7 +61,12 @@ private fun createM3Dark(mf: MoneyFlowColors) = darkColorScheme(
     onSurface = mf.textPrimary,
     surfaceVariant = mf.surfaceVariant,
     onSurfaceVariant = mf.textSecondary,
-    outline = mf.border
+    outline = mf.inputBorder,
+    outlineVariant = mf.border,
+    error = mf.error,
+    onError = Color.White,
+    errorContainer = mf.errorContainer,
+    onErrorContainer = mf.error
 )
 
 @Composable

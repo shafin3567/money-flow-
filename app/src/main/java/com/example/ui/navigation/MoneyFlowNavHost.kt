@@ -47,6 +47,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -69,6 +70,7 @@ import com.example.ui.screens.goals.SavingsGoalsScreen
 import com.example.ui.screens.home.HomeScreen
 import com.example.ui.screens.more.BackupRestoreScreen
 import com.example.ui.screens.more.MoreScreen
+import com.example.ui.screens.more.NotificationsScreen
 import com.example.ui.screens.more.SecurityLockScreen
 import com.example.ui.screens.onboarding.OnboardingScreen
 import com.example.ui.screens.recurring.AddRecurringDialog
@@ -92,7 +94,8 @@ enum class SubScreen {
     SAVINGS_GOALS,
     RECURRING,
     ANALYTICS,
-    BACKUP_RESTORE
+    BACKUP_RESTORE,
+    NOTIFICATIONS
 }
 
 @Composable
@@ -100,6 +103,8 @@ fun MoneyFlowNavHost(
     viewModel: FinanceViewModel,
     onBiometricPromptRequest: () -> Unit,
     canUseBiometrics: Boolean,
+    initialDestinationSubScreen: String? = null,
+    initialDestinationTab: String? = null,
     modifier: Modifier = Modifier
 ) {
     val userPrefs by viewModel.userPreferences.collectAsStateWithLifecycle()
@@ -122,6 +127,32 @@ fun MoneyFlowNavHost(
 
     var currentTab by remember { mutableStateOf<Tab>(Tab.Home) }
     var currentSubScreen by remember { mutableStateOf(SubScreen.NONE) }
+
+    // Handle deep links from notifications
+    LaunchedEffect(initialDestinationSubScreen, initialDestinationTab) {
+        if (!initialDestinationSubScreen.isNullOrBlank()) {
+            when (initialDestinationSubScreen) {
+                "BUDGETS" -> {
+                    currentTab = Tab.Budgets
+                    currentSubScreen = SubScreen.NONE
+                }
+                "RECURRING" -> currentSubScreen = SubScreen.RECURRING
+                "SAVINGS_GOALS" -> currentSubScreen = SubScreen.SAVINGS_GOALS
+                "NOTIFICATIONS" -> currentSubScreen = SubScreen.NOTIFICATIONS
+                "ACCOUNTS" -> currentSubScreen = SubScreen.ACCOUNTS
+                "ANALYTICS" -> currentSubScreen = SubScreen.ANALYTICS
+                else -> currentSubScreen = SubScreen.NONE
+            }
+        } else if (!initialDestinationTab.isNullOrBlank()) {
+            when (initialDestinationTab) {
+                "BUDGETS" -> currentTab = Tab.Budgets
+                "TRANSACTIONS" -> currentTab = Tab.Transactions
+                "HOME" -> currentTab = Tab.Home
+                "MORE" -> currentTab = Tab.More
+            }
+            currentSubScreen = SubScreen.NONE
+        }
+    }
 
     // Dialog & Sheet States
     var isComposerOpen by remember { mutableStateOf(false) }
@@ -220,6 +251,26 @@ fun MoneyFlowNavHost(
                     onBackClick = { currentSubScreen = SubScreen.NONE }
                 )
             }
+            SubScreen.NOTIFICATIONS -> {
+                val notifPrefs by viewModel.notificationPreferences.collectAsStateWithLifecycle()
+                NotificationsScreen(
+                    preferences = notifPrefs,
+                    onBackClick = { currentSubScreen = SubScreen.NONE },
+                    onToggleMaster = { viewModel.updateNotificationMaster(it) },
+                    onToggleRecurring = { viewModel.updateNotificationRecurring(it) },
+                    onToggleBudgets = { viewModel.updateNotificationBudgets(it) },
+                    onToggleGoals = { viewModel.updateNotificationGoals(it) },
+                    onToggleDaily = { viewModel.updateNotificationDaily(it) },
+                    onToggleMonthly = { viewModel.updateNotificationMonthly(it) },
+                    onUpdateDailyTime = { h, m -> viewModel.updateDailySummaryTime(h, m) },
+                    onUpdateMonthlySchedule = { d, h, m -> viewModel.updateMonthlySummarySchedule(d, h, m) },
+                    onToggleThreshold75 = { viewModel.updateBudgetThreshold(75, it) },
+                    onToggleThreshold90 = { viewModel.updateBudgetThreshold(90, it) },
+                    onToggleThreshold100 = { viewModel.updateBudgetThreshold(100, it) },
+                    onTogglePrivacy = { viewModel.updateNotificationPrivacy(it) },
+                    onSendTestNotification = { viewModel.sendTestNotification() }
+                )
+            }
             SubScreen.NONE -> {
                 // Tab Content
                 when (currentTab) {
@@ -296,6 +347,7 @@ fun MoneyFlowNavHost(
                             onNavigateToRecurring = { currentSubScreen = SubScreen.RECURRING },
                             onNavigateToAnalytics = { currentSubScreen = SubScreen.ANALYTICS },
                             onNavigateToBackup = { currentSubScreen = SubScreen.BACKUP_RESTORE },
+                            onNavigateToNotifications = { currentSubScreen = SubScreen.NOTIFICATIONS },
                             onUpdateCurrency = { curr -> viewModel.updateDefaultCurrency(curr) },
                             onUpdateSecurity = { en, pin, bio -> viewModel.updateAppLock(en, pin, bio) }
                         )

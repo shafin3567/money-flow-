@@ -40,6 +40,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberModalBottomSheetState
+import com.example.ui.components.MoneyFlowTextField
+import com.example.ui.components.moneyFlowTextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -62,15 +64,13 @@ import com.example.data.model.Frequency
 import com.example.data.model.TransactionType
 import com.example.ui.components.CategoryIconBadge
 import com.example.ui.components.PrimaryButton
+import com.example.ui.theme.MoneyFlowTheme
 import com.example.ui.theme.NegativeCoral
 import com.example.ui.theme.PositiveGreen
 import com.example.ui.theme.PowderBlue
 import com.example.ui.theme.PowderBlueAccent
 import com.example.ui.theme.SoftPeach
 import com.example.ui.theme.SoftPeachAccent
-import com.example.ui.theme.TextPrimary
-import com.example.ui.theme.TextSecondary
-import com.example.ui.theme.TextTertiary
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -151,12 +151,13 @@ fun TransactionComposerSheet(
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
     val curr = CurrencyData.getByCode(defaultCurrencyCode)
+    val colors = MoneyFlowTheme.colors
 
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
         sheetState = sheetState,
         shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
-        containerColor = Color.White,
+        containerColor = colors.surfaceElevated,
         dragHandle = null
     ) {
         Column(
@@ -176,7 +177,7 @@ fun TransactionComposerSheet(
                     text = if (existingTransaction != null) "Edit Transaction" else "New Transaction",
                     style = MaterialTheme.typography.titleLarge.copy(
                         fontWeight = FontWeight.Bold,
-                        color = TextPrimary
+                        color = colors.textPrimary
                     )
                 )
 
@@ -185,12 +186,12 @@ fun TransactionComposerSheet(
                     modifier = Modifier
                         .size(36.dp)
                         .clip(CircleShape)
-                        .background(Color(0xFFF4EFE6))
+                        .background(if (colors.isDark) colors.surfaceSubtle else Color(0xFFF4EFE6))
                 ) {
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = "Close",
-                        tint = TextSecondary,
+                        tint = colors.textSecondary,
                         modifier = Modifier.size(18.dp)
                     )
                 }
@@ -203,7 +204,7 @@ fun TransactionComposerSheet(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(20.dp))
-                    .background(Color(0xFFF5EFE6))
+                    .background(if (colors.isDark) colors.surfaceSubtle else Color(0xFFF5EFE6))
                     .padding(4.dp),
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
@@ -237,7 +238,7 @@ fun TransactionComposerSheet(
                             text = label,
                             style = MaterialTheme.typography.labelLarge.copy(
                                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-                                color = if (isSelected) Color.White else TextSecondary,
+                                color = if (isSelected) Color.White else colors.textSecondary,
                                 fontSize = 13.5.sp
                             ),
                             maxLines = 1,
@@ -256,9 +257,9 @@ fun TransactionComposerSheet(
                     .clip(RoundedCornerShape(24.dp))
                     .background(
                         when (type) {
-                            TransactionType.EXPENSE -> Color(0xFFFFECE9)
-                            TransactionType.INCOME -> Color(0xFFEAF8F0)
-                            TransactionType.TRANSFER -> PowderBlue.copy(alpha = 0.45f)
+                            TransactionType.EXPENSE -> if (colors.isDark) colors.expenseContainer else Color(0xFFFFECE9)
+                            TransactionType.INCOME -> if (colors.isDark) colors.incomeContainer else Color(0xFFEAF8F0)
+                            TransactionType.TRANSFER -> if (colors.isDark) colors.transferContainer else PowderBlue.copy(alpha = 0.45f)
                         }
                     )
                     .padding(horizontal = 20.dp, vertical = 16.dp),
@@ -298,22 +299,24 @@ fun TransactionComposerSheet(
                                 style = MaterialTheme.typography.headlineMedium.copy(
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 28.sp,
-                                    color = TextTertiary
+                                    color = colors.inputPlaceholder
                                 )
                             )
                         },
                         textStyle = MaterialTheme.typography.headlineMedium.copy(
                             fontWeight = FontWeight.Bold,
                             fontSize = 28.sp,
-                            color = TextPrimary
+                            color = colors.inputText
                         ),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                         singleLine = true,
-                        colors = OutlinedTextFieldDefaults.colors(
+                        colors = moneyFlowTextFieldColors(
+                            containerColor = Color.Transparent,
                             focusedBorderColor = Color.Transparent,
                             unfocusedBorderColor = Color.Transparent,
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedContainerColor = Color.Transparent
+                            textColor = colors.inputText,
+                            placeholderColor = colors.inputPlaceholder,
+                            cursorColor = colors.inputCursor
                         ),
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -328,7 +331,7 @@ fun TransactionComposerSheet(
                     text = "Category",
                     style = MaterialTheme.typography.labelMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        color = TextSecondary
+                        color = colors.textSecondary
                     )
                 )
 
@@ -361,7 +364,7 @@ fun TransactionComposerSheet(
                                 text = cat.name,
                                 style = MaterialTheme.typography.bodySmall.copy(
                                     fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-                                    color = if (isSelected) Color.White else TextPrimary
+                                    color = if (isSelected) Color.White else colors.textPrimary
                                 )
                             )
                         }
@@ -376,7 +379,7 @@ fun TransactionComposerSheet(
                 text = if (type == TransactionType.TRANSFER) "From Account" else "Account",
                 style = MaterialTheme.typography.labelMedium.copy(
                     fontWeight = FontWeight.Bold,
-                    color = TextSecondary
+                    color = colors.textSecondary
                 )
             )
 
@@ -392,7 +395,7 @@ fun TransactionComposerSheet(
                     Row(
                         modifier = Modifier
                             .clip(RoundedCornerShape(16.dp))
-                            .background(if (isSelected) PowderBlueAccent else Color(0xFFF5EFE6))
+                            .background(if (isSelected) PowderBlueAccent else if (colors.isDark) colors.surfaceSubtle else Color(0xFFF5EFE6))
                             .clickable {
                                 selectedAccountId = acc.id
                                 if (selectedToAccountId == acc.id) {
@@ -406,7 +409,7 @@ fun TransactionComposerSheet(
                             text = acc.name,
                             style = MaterialTheme.typography.bodySmall.copy(
                                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-                                color = if (isSelected) Color.White else TextPrimary
+                                color = if (isSelected) Color.White else colors.textPrimary
                             )
                         )
                     }
@@ -421,7 +424,7 @@ fun TransactionComposerSheet(
                     text = "To Account",
                     style = MaterialTheme.typography.labelMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        color = TextSecondary
+                        color = colors.textSecondary
                     )
                 )
 
@@ -437,7 +440,7 @@ fun TransactionComposerSheet(
                         Row(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(16.dp))
-                                .background(if (isSelected) PowderBlueAccent else Color(0xFFF5EFE6))
+                                .background(if (isSelected) PowderBlueAccent else if (colors.isDark) colors.surfaceSubtle else Color(0xFFF5EFE6))
                                 .clickable { selectedToAccountId = acc.id }
                                 .padding(horizontal = 14.dp, vertical = 9.dp),
                             verticalAlignment = Alignment.CenterVertically
@@ -446,7 +449,7 @@ fun TransactionComposerSheet(
                                 text = acc.name,
                                 style = MaterialTheme.typography.bodySmall.copy(
                                     fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-                                    color = if (isSelected) Color.White else TextPrimary
+                                    color = if (isSelected) Color.White else colors.textPrimary
                                 )
                             )
                         }
@@ -461,7 +464,7 @@ fun TransactionComposerSheet(
                 text = "Date",
                 style = MaterialTheme.typography.labelMedium.copy(
                     fontWeight = FontWeight.Bold,
-                    color = TextSecondary
+                    color = colors.textSecondary
                 )
             )
 
@@ -505,17 +508,13 @@ fun TransactionComposerSheet(
             Spacer(modifier = Modifier.height(20.dp))
 
             // Note Field
-            OutlinedTextField(
+            MoneyFlowTextField(
                 value = note,
                 onValueChange = { note = it },
                 label = { Text("Note") },
                 placeholder = { Text("e.g. Lunch, Groceries, Rent") },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(18.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = PowderBlueAccent,
-                    unfocusedBorderColor = Color(0x2223272F)
-                ),
                 singleLine = true
             )
 
@@ -532,7 +531,7 @@ fun TransactionComposerSheet(
                         text = "Make recurring",
                         style = MaterialTheme.typography.bodyMedium.copy(
                             fontWeight = FontWeight.SemiBold,
-                            color = TextPrimary
+                            color = colors.textPrimary
                         ),
                         maxLines = 1,
                         softWrap = false,
@@ -540,7 +539,7 @@ fun TransactionComposerSheet(
                     )
                     Text(
                         text = "Auto-track future repeated instances",
-                        style = MaterialTheme.typography.bodySmall.copy(color = TextSecondary),
+                        style = MaterialTheme.typography.bodySmall.copy(color = colors.textSecondary),
                         maxLines = 1,
                         softWrap = false,
                         overflow = TextOverflow.Ellipsis
@@ -563,7 +562,7 @@ fun TransactionComposerSheet(
                 Column(modifier = Modifier.padding(top = 12.dp)) {
                     Text(
                         text = "Frequency",
-                        style = MaterialTheme.typography.labelSmall.copy(color = TextSecondary)
+                        style = MaterialTheme.typography.labelSmall.copy(color = colors.textSecondary)
                     )
                     Spacer(modifier = Modifier.height(6.dp))
                     Row(
@@ -576,7 +575,7 @@ fun TransactionComposerSheet(
                                 modifier = Modifier
                                     .weight(1f)
                                     .clip(RoundedCornerShape(12.dp))
-                                    .background(if (selected) PowderBlueAccent else Color(0xFFF5EFE6))
+                                    .background(if (selected) PowderBlueAccent else if (colors.isDark) colors.surfaceSubtle else Color(0xFFF5EFE6))
                                     .clickable { frequency = freq }
                                     .padding(vertical = 8.dp),
                                 contentAlignment = Alignment.Center
@@ -585,7 +584,7 @@ fun TransactionComposerSheet(
                                     text = freq.name.lowercase().replaceFirstChar { it.uppercase() },
                                     style = MaterialTheme.typography.labelSmall.copy(
                                         fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
-                                        color = if (selected) Color.White else TextPrimary
+                                        color = if (selected) Color.White else colors.textPrimary
                                     )
                                 )
                             }
@@ -660,7 +659,7 @@ fun TransactionComposerSheet(
             },
             dismissButton = {
                 TextButton(onClick = { showDatePicker = false }) {
-                    Text("Cancel", color = TextSecondary)
+                    Text("Cancel", color = colors.textSecondary)
                 }
             }
         ) {
@@ -683,10 +682,11 @@ private fun DateChip(
     icon: androidx.compose.ui.graphics.vector.ImageVector? = null,
     onClick: () -> Unit
 ) {
+    val colors = MoneyFlowTheme.colors
     Row(
         modifier = Modifier
             .clip(RoundedCornerShape(16.dp))
-            .background(if (isSelected) PowderBlueAccent else Color(0xFFF5EFE6))
+            .background(if (isSelected) PowderBlueAccent else if (colors.isDark) colors.surfaceSubtle else Color(0xFFF5EFE6))
             .clickable(onClick = onClick)
             .padding(horizontal = 14.dp, vertical = 9.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -695,7 +695,7 @@ private fun DateChip(
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = if (isSelected) Color.White else TextSecondary,
+                tint = if (isSelected) Color.White else colors.textSecondary,
                 modifier = Modifier.size(16.dp)
             )
             Spacer(modifier = Modifier.width(6.dp))
@@ -704,7 +704,7 @@ private fun DateChip(
             text = text,
             style = MaterialTheme.typography.bodySmall.copy(
                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-                color = if (isSelected) Color.White else TextPrimary
+                color = if (isSelected) Color.White else colors.textPrimary
             )
         )
     }

@@ -1,5 +1,6 @@
 package com.example.ui.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.local.entity.AccountEntity
@@ -20,6 +21,10 @@ import com.example.data.repository.FinanceRepository
 import com.example.data.repository.SecurityManager
 import com.example.data.repository.UserPreferences
 import com.example.data.repository.UserPreferencesRepository
+import com.example.notifications.NotificationPreferences
+import com.example.notifications.NotificationPreferencesRepository
+import com.example.notifications.NotificationProcessor
+import com.example.notifications.NotificationScheduler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -39,7 +44,9 @@ data class TransactionsFilterState(
 class FinanceViewModel(
     private val financeRepository: FinanceRepository,
     private val preferencesRepository: UserPreferencesRepository,
-    private val backupRestoreManager: BackupRestoreManager
+    private val backupRestoreManager: BackupRestoreManager,
+    private val notificationPreferencesRepository: NotificationPreferencesRepository,
+    private val appContext: Context
 ) : ViewModel() {
 
     // User preferences & settings
@@ -48,6 +55,14 @@ class FinanceViewModel(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = UserPreferences()
+        )
+
+    // Notification preferences stream
+    val notificationPreferences: StateFlow<NotificationPreferences> = notificationPreferencesRepository.preferencesFlow
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = NotificationPreferences()
         )
 
     // Data streams
@@ -226,6 +241,7 @@ class FinanceViewModel(
                 isRecurring = isRecurring
             )
             financeRepository.insertTransaction(tx)
+            NotificationProcessor.processBudgetThresholdAlerts(appContext)
 
             // Update smart recent defaults
             preferencesRepository.updateLastUsed(
@@ -250,6 +266,7 @@ class FinanceViewModel(
                     note = note
                 )
                 financeRepository.insertRecurring(recurring)
+                NotificationProcessor.processRecurringReminders(appContext)
             }
         }
     }
@@ -257,12 +274,14 @@ class FinanceViewModel(
     fun updateTransaction(transaction: TransactionEntity) {
         viewModelScope.launch {
             financeRepository.updateTransaction(transaction)
+            NotificationProcessor.processBudgetThresholdAlerts(appContext)
         }
     }
 
     fun deleteTransaction(transaction: TransactionEntity) {
         viewModelScope.launch {
             financeRepository.deleteTransaction(transaction)
+            NotificationProcessor.processBudgetThresholdAlerts(appContext)
         }
     }
 
@@ -349,6 +368,7 @@ class FinanceViewModel(
     fun addMoneyToGoal(goalId: Long, amountMinorUnits: Long) {
         viewModelScope.launch {
             financeRepository.addMoneyToGoal(goalId, amountMinorUnits)
+            NotificationProcessor.processSavingsGoalReminders(appContext)
         }
     }
 
@@ -432,6 +452,92 @@ class FinanceViewModel(
 
     suspend fun restoreBackup(jsonString: String, replaceExisting: Boolean): Result<BackupMetadata> {
         return backupRestoreManager.restoreFromJson(jsonString, replaceExisting)
+    }
+
+    // Notification Settings Methods
+    fun updateNotificationMaster(enabled: Boolean) {
+        viewModelScope.launch {
+            notificationPreferencesRepository.setMasterEnabled(enabled)
+            val prefs = notificationPreferencesRepository.getPreferences()
+            NotificationScheduler.scheduleAll(appContext, prefs)
+        }
+    }
+
+    fun updateNotificationRecurring(enabled: Boolean) {
+        viewModelScope.launch {
+            notificationPreferencesRepository.setRecurringEnabled(enabled)
+            if (enabled) NotificationScheduler.scheduleRecurringReminders(appContext)
+            else NotificationScheduler.cancelRecurringReminders(appContext)
+        }
+    }
+
+    fun updateNotificationBudgets(enabled: Boolean) {
+        viewModelScope.launch {
+            notificationPreferencesRepository.setBudgetAlertsEnabled(enabled)
+            if (enabled) NotificationProcessor.processBudgetThresholdAlerts(appContext)
+        }
+    }
+
+    fun updateNotificationGoals(enabled: Boolean) {
+        viewModelScope.launch {
+            notificationPreferencesRepository.setSavingsGoalsEnabled(enabled)
+            if (enabled) NotificationProcessor.processSavingsGoalReminders(appContext)
+        }
+    }
+
+    fun updateNotificationDaily(enabled: Boolean) {
+        viewModelScope.launch {
+            notificationPreferencesRepository.setDailySummaryEnabled(enabled)
+            val prefs = notificationPreferencesRepository.getPreferences()
+            if (enabled) NotificationScheduler.scheduleDailySummary(appContext, prefs.dailySummaryHour, prefs.dailySummaryMinute)
+            else NotificationScheduler.cancelDailySummary(appContext)
+        }
+    }
+
+    fun updateNotificationMonthly(enabled: Boolean) {
+        viewModelScope.launch {
+            notificationPreferencesRepository.setMonthlySummaryEnabled(enabled)
+            val prefs = notificationPreferencesRepository.getPreferences()
+            if (enabled) NotificationScheduler.scheduleMonthlySummary(appContext, prefs.monthlySummaryDay, prefs.monthlySummaryHour, prefs.monthlySummaryMinute)
+            else NotificationScheduler.cancelMonthlySummary(appContext)
+        }
+    }
+
+    fun updateDailySummaryTime(hour: Int, minute: Int) {
+        viewModelScope.launch {
+            notificationPreferencesRepository.setDailySummaryTime(hour, minute)
+            NotificationScheduler.scheduleDailySummary(appContext, hour, minute)
+        }
+    }
+
+    fun updateMonthlySummarySchedule(day: Int, hour: Int, minute: Int) {
+        viewModelScope.launch {
+            notificationPreferencesRepository.setMonthlySummarySchedule(day, hour, minute)
+            NotificationScheduler.scheduleMonthlySummary(appContext, day, hour, minute)
+        }
+    }
+
+    fun updateBudgetThreshold(threshold: Int, enabled: Boolean) {
+        viewModelScope.launch {
+            when (threshold) {
+                75 -> notificationPreferencesRepository.setBudgetThreshold75(enabled)
+                90 -> notificationPreferencesRepository.setBudgetThreshold90(enabled)
+                100 -> notificationPreferencesRepository.setBudgetThreshold100(enabled)
+            }
+            if (enabled) NotificationProcessor.processBudgetThresholdAlerts(appContext)
+        }
+    }
+
+    fun updateNotificationPrivacy(enabled: Boolean) {
+        viewModelScope.launch {
+            notificationPreferencesRepository.setPrivacyMode(enabled)
+        }
+    }
+
+    fun sendTestNotification() {
+        viewModelScope.launch {
+            NotificationProcessor.sendTestNotification(appContext)
+        }
     }
 
     private fun calculateNextDueDate(fromMillis: Long, frequency: Frequency): Long {

@@ -37,11 +37,10 @@ import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
+import com.example.ui.components.MoneyFlowTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -307,7 +306,7 @@ private fun CurrencyStep(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        OutlinedTextField(
+        MoneyFlowTextField(
             value = searchQuery,
             onValueChange = { searchQuery = it },
             placeholder = { Text("Search currency...") },
@@ -315,7 +314,7 @@ private fun CurrencyStep(
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = null,
-                    tint = colors.textSecondary
+                    tint = colors.inputIcon
                 )
             },
             modifier = Modifier
@@ -327,12 +326,6 @@ private fun CurrencyStep(
                     spotColor = colors.shadow
                 ),
             shape = RoundedCornerShape(20.dp),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color(0xFF7FA7C4),
-                unfocusedBorderColor = Color.Transparent,
-                focusedContainerColor = if (colors.isDark) colors.surfaceElevated else Color.White,
-                unfocusedContainerColor = if (colors.isDark) colors.surfaceElevated else Color.White
-            ),
             singleLine = true
         )
 
@@ -477,7 +470,7 @@ private fun SecurityStep(
                 if (enableLock) {
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    OutlinedTextField(
+                    MoneyFlowTextField(
                         value = pin,
                         onValueChange = {
                             if (it.length <= 6 && it.all { c -> c.isDigit() }) {
@@ -488,7 +481,7 @@ private fun SecurityStep(
                         placeholder = { Text("••••") },
                         isError = pinError,
                         supportingText = if (pinError) {
-                            { Text("Please enter at least 4 digits", color = colors.error) }
+                            { Text("Please enter at least 4 digits", color = colors.inputError) }
                         } else null,
                         visualTransformation = PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
@@ -580,7 +573,7 @@ private fun FinishStep(
 
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    OutlinedTextField(
+                    MoneyFlowTextField(
                         value = accountName,
                         onValueChange = onAccountNameChange,
                         label = { Text("Account Name") },

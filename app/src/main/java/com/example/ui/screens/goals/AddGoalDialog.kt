@@ -24,12 +24,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
+import com.example.ui.components.MoneyFlowTextField
+import com.example.ui.theme.MoneyFlowTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -46,8 +46,6 @@ import androidx.compose.ui.unit.dp
 import com.example.data.model.CurrencyData
 import com.example.ui.components.PrimaryButton
 import com.example.ui.theme.PowderBlueAccent
-import com.example.ui.theme.TextPrimary
-import com.example.ui.theme.TextSecondary
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -73,12 +71,13 @@ fun AddGoalDialog(
     var errorText by remember { mutableStateOf<String?>(null) }
 
     val curr = CurrencyData.getByCode(currencyCode)
+    val colors = MoneyFlowTheme.colors
     val colorOptions = listOf("#F7C59F", "#7CB9E8", "#52B788", "#E4A4BF", "#E7A838", "#B0B7C3")
 
     BasicAlertDialog(onDismissRequest = onDismissRequest) {
         Surface(
             shape = RoundedCornerShape(32.dp),
-            color = Color.White,
+            color = colors.surfaceElevated,
             tonalElevation = 6.dp,
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -96,7 +95,7 @@ fun AddGoalDialog(
                         text = "New Savings Goal",
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            color = TextPrimary
+                            color = colors.textPrimary
                         ),
                         maxLines = 1,
                         softWrap = false,
@@ -108,12 +107,12 @@ fun AddGoalDialog(
                         modifier = Modifier
                             .size(34.dp)
                             .clip(CircleShape)
-                            .background(Color(0xFFF4EFE6))
+                            .background(if (colors.isDark) colors.surfaceSubtle else Color(0xFFF4EFE6))
                     ) {
                         Icon(
                             imageVector = Icons.Default.Close,
                             contentDescription = "Close",
-                            tint = TextSecondary,
+                            tint = colors.textSecondary,
                             modifier = Modifier.size(16.dp)
                         )
                     }
@@ -121,23 +120,19 @@ fun AddGoalDialog(
 
                 Spacer(modifier = Modifier.height(18.dp))
 
-                OutlinedTextField(
+                MoneyFlowTextField(
                     value = name,
                     onValueChange = { name = it },
                     label = { Text("Goal Name") },
                     placeholder = { Text("e.g. Vacation, Laptop, Emergency") },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = PowderBlueAccent,
-                        unfocusedBorderColor = Color(0x2223272F)
-                    ),
                     singleLine = true
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                OutlinedTextField(
+                MoneyFlowTextField(
                     value = targetAmountText,
                     onValueChange = { input ->
                         if (input.matches(Regex("""^\d*([.,]\d{0,2})?$"""))) {
@@ -155,7 +150,7 @@ fun AddGoalDialog(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                OutlinedTextField(
+                MoneyFlowTextField(
                     value = currentAmountText,
                     onValueChange = { input ->
                         if (input.matches(Regex("""^\d*([.,]\d{0,2})?$"""))) {
@@ -178,7 +173,7 @@ fun AddGoalDialog(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(16.dp))
-                        .background(Color(0xFFF5EFE6))
+                        .background(if (colors.isDark) colors.surfaceSubtle else Color(0xFFF5EFE6))
                         .clickable { showDatePicker = true }
                         .padding(horizontal = 16.dp, vertical = 12.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -187,7 +182,7 @@ fun AddGoalDialog(
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = "Target Date",
-                            style = MaterialTheme.typography.labelSmall.copy(color = TextSecondary),
+                            style = MaterialTheme.typography.labelSmall.copy(color = colors.textSecondary),
                             maxLines = 1,
                             softWrap = false
                         )
@@ -195,7 +190,7 @@ fun AddGoalDialog(
                             text = dateFormat.format(Date(targetDateMillis)),
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 fontWeight = FontWeight.SemiBold,
-                                color = TextPrimary
+                                color = colors.textPrimary
                             ),
                             maxLines = 1,
                             softWrap = false,
@@ -212,7 +207,7 @@ fun AddGoalDialog(
                     text = "Accent Color",
                     style = MaterialTheme.typography.labelSmall.copy(
                         fontWeight = FontWeight.Bold,
-                        color = TextSecondary
+                        color = colors.textSecondary
                     )
                 )
 
@@ -291,7 +286,7 @@ fun AddGoalDialog(
             },
             dismissButton = {
                 TextButton(onClick = { showDatePicker = false }) {
-                    Text("Cancel", color = TextSecondary)
+                    Text("Cancel", color = colors.textSecondary)
                 }
             }
         ) {

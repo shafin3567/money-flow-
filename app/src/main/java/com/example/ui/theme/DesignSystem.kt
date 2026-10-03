@@ -36,7 +36,22 @@ data class MoneyFlowColors(
     val border: Color,
     val shadow: Color,
     val divider: Color,
-    val isDark: Boolean
+    val isDark: Boolean,
+    // Semantic input colors
+    val inputBackground: Color,
+    val inputText: Color,
+    val inputPlaceholder: Color,
+    val inputLabel: Color,
+    val inputFocusedLabel: Color,
+    val inputUnfocusedLabel: Color,
+    val inputCursor: Color,
+    val inputIcon: Color,
+    val inputBorder: Color,
+    val inputFocusedBorder: Color,
+    val inputError: Color,
+    val inputSupportingText: Color,
+    val inputSelectionBackground: Color,
+    val inputSelectionHandle: Color
 )
 
 val LightMoneyFlowColors = MoneyFlowColors(
@@ -67,7 +82,22 @@ val LightMoneyFlowColors = MoneyFlowColors(
     border = Color(0x142C2425),
     shadow = Color(0x1A3A2E2C),
     divider = Color(0x102C2425),
-    isDark = false
+    isDark = false,
+    // Light Mode Input Colors (Soft white/cream background, deep warm charcoal text, powder blue accents)
+    inputBackground = Color(0xFFFFFFFF),
+    inputText = Color(0xFF2C2425),
+    inputPlaceholder = Color(0xFF8A7D7E),
+    inputLabel = Color(0xFF635657),
+    inputFocusedLabel = Color(0xFF5A82A0),
+    inputUnfocusedLabel = Color(0xFF736566),
+    inputCursor = Color(0xFF5A82A0),
+    inputIcon = Color(0xFF6B5E60),
+    inputBorder = Color(0x382C2425),
+    inputFocusedBorder = Color(0xFF7FA7C4),
+    inputError = Color(0xFFD32F2F),
+    inputSupportingText = Color(0xFF736566),
+    inputSelectionBackground = Color(0x407FA7C4),
+    inputSelectionHandle = Color(0xFF5A82A0)
 )
 
 val DarkMoneyFlowColors = MoneyFlowColors(
@@ -98,7 +128,22 @@ val DarkMoneyFlowColors = MoneyFlowColors(
     border = Color(0x22FFFFFF),
     shadow = Color(0x40000000),
     divider = Color(0x1AFFFFFF),
-    isDark = true
+    isDark = true,
+    // Dark Mode Input Colors (Dark elevated surface, light warm gray text, light accent cursor & borders)
+    inputBackground = Color(0xFF282224),
+    inputText = Color(0xFFF6F0EC),
+    inputPlaceholder = Color(0xFFA09492),
+    inputLabel = Color(0xFFD4C8C5),
+    inputFocusedLabel = Color(0xFF9FC1DA),
+    inputUnfocusedLabel = Color(0xFFB8ACA8),
+    inputCursor = Color(0xFF8FAFC6),
+    inputIcon = Color(0xFFB8ACA8),
+    inputBorder = Color(0x38FFFFFF),
+    inputFocusedBorder = Color(0xFF8FAFC6),
+    inputError = Color(0xFFFF8A80),
+    inputSupportingText = Color(0xFFB8ACA8),
+    inputSelectionBackground = Color(0x508FAFC6),
+    inputSelectionHandle = Color(0xFF8FAFC6)
 )
 
 object MoneyFlowShapes {
