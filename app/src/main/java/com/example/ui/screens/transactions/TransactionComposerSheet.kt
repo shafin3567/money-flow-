@@ -348,7 +348,7 @@ fun TransactionComposerSheet(
                         Row(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(16.dp))
-                                .background(if (isSelected) PowderBlueAccent else Color(0xFFF5EFE6))
+                                .background(if (isSelected) PowderBlueAccent else if (colors.isDark) colors.surfaceSubtle else Color(0xFFF5EFE6))
                                 .clickable { selectedCategoryId = cat.id }
                                 .padding(horizontal = 12.dp, vertical = 8.dp),
                             verticalAlignment = Alignment.CenterVertically
