@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'core/theme/app_theme.dart';
 import 'screens/home_screen.dart';
 import 'screens/transactions_screen.dart';
@@ -7,6 +8,10 @@ import 'screens/more_screen.dart';
 import 'core/theme/app_colors.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Ensure 100% offline behavior for Google Fonts
+  GoogleFonts.config.allowRuntimeFetching = false;
+
   runApp(const MoneyFlowApp());
 }
 

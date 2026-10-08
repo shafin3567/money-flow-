@@ -1,17 +1,29 @@
-# moneyflow
+# MoneyFlow — Stitch Personal Finance Android App (Flutter)
 
-A new Flutter project.
+MoneyFlow is an offline-first, claymorphic personal finance Android application built in Flutter, matching the official Stitch design specification (`projects/10566049010137516618`).
 
-## Getting Started
+## 🚀 Opening in Android Studio
 
-This project is a starting point for a Flutter application.
+This project is structured as a standard Flutter application and can be opened directly in **Android Studio**:
 
-A few resources to get you started if this is your first Flutter project:
+1. Launch **Android Studio**.
+2. Select **Open** and choose the repository root directory (`/app` or repository base).
+3. Android Studio will automatically detect the Flutter project (`pubspec.yaml`) and the Android module (`android/`).
+4. Ensure the Flutter & Dart plugins are installed in Android Studio.
+5. Click **Run** or press `Shift + F10` to launch MoneyFlow on an Android Emulator or connected device.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## 🛠 Features & Architecture
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **100% Offline Vault:** All accounts, transactions, and budgets are persisted locally in SQLite (`sqflite`). Zero external network dependencies.
+- **Claymorphism Design System:** Soft porcelain surfaces, extruded clay cards, pneumatic depth, and custom bottom floating navigation.
+- **Financial Integrity:** Integer minor units used for exact money calculations ($1.00 = 100 cents) without floating point imprecision.
+
+## 🧪 Testing & Verification
+
+Run tests and static analysis from terminal:
+
+```bash
+flutter pub get
+flutter test
+flutter analyze
+```
