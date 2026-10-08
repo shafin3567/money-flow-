@@ -20,9 +20,9 @@ import com.example.ui.theme.MoneyFlowTheme
 @Composable
 fun MoneyFlowCard(
     modifier: Modifier = Modifier,
-    shape: Shape = RoundedCornerShape(28.dp),
+    shape: Shape = RoundedCornerShape(24.dp),
     backgroundColor: Color = MoneyFlowTheme.colors.surface,
-    elevation: Dp = 2.dp,
+    elevation: Dp = 4.dp,
     borderColor: Color = MoneyFlowTheme.colors.border,
     onClick: (() -> Unit)? = null,
     content: @Composable BoxScope.() -> Unit
@@ -46,7 +46,7 @@ fun MoneyFlowCard(
         border = BorderStroke(1.dp, borderColor)
     ) {
         Box(
-            modifier = Modifier.padding(20.dp),
+            modifier = Modifier.padding(18.dp),
             content = content
         )
     }
