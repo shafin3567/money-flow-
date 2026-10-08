@@ -2,31 +2,31 @@ package com.example.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// MoneyFlow 3D Claymorphic Color Palette directly matching reference art
-val CreamBackground = Color(0xFFFAF4ED)
+// MoneyFlow Clay & Light Color Palette directly matching Stitch design authority
+val CreamBackground = Color(0xFFFCF9F4)
 val CreamSurface = Color(0xFFFFFFFF)
-val CreamSurfaceVariant = Color(0xFFF3EBE0)
-val SoftPeach = Color(0xFFFCE8DE)
-val SoftPeachAccent = Color(0xFFE89D86)
-val PowderBlue = Color(0xFFD4E5F2)
-val PowderBlueAccent = Color(0xFF7FA7C4)
-val SoftMint = Color(0xFFD5EBDC)
-val SoftMintAccent = Color(0xFF5BA678)
-val ClayOchre = Color(0xFFFCE6BA)
-val ClayOchreAccent = Color(0xFFE5AA42)
-val CoralAccent = Color(0xFFE27E6A)
+val CreamSurfaceVariant = Color(0xFFE5E2DD)
+val RecessedWell = Color(0xFFF0EDE9)
 
-val PositiveGreen = Color(0xFF43A047)
-val PositiveGreenBg = Color(0xFFE8F5E9)
-val NegativeCoral = Color(0xFFE26B58)
-val NegativeCoralBg = Color(0xFFFDECE9)
-val WarningAmber = Color(0xFFEAA236)
-val WarningAmberBg = Color(0xFFFFF8E1)
+val SagePrimary = Color(0xFF5A7C65)
+val SagePrimaryDark = Color(0xFF42634D)
+val SagePrimaryLight = Color(0xFFC6ECD0)
 
-val TextPrimary = Color(0xFF2C2425)
-val TextSecondary = Color(0xFF736566)
-val TextTertiary = Color(0xFF9A8B8C)
+val SoftPeach = Color(0xFFFDAB85)
+val SoftPeachAccent = Color(0xFFF3A27D)
+val SoftPeachLight = Color(0xFFFFDBCC)
 
-val CardBorder = Color(0x142C2425)
-val ClayShadow = Color(0x183A2E2C)
-val DarkClayShadow = Color(0x35000000)
+val PowderBlue = Color(0xFF7CA7D1)
+val PowderBlueDark = Color(0xFF325F86)
+val PowderBlueLight = Color(0xFFCEE5FF)
+
+val TerracottaCoral = Color(0xFFE76F51)
+val TerracottaCoralDark = Color(0xFFBA1A1A)
+
+val WarmCharcoal = Color(0xFF1C1C19)
+val SlateStone = Color(0xFF424843)
+val MutedSlate = Color(0xFF727972)
+
+val CardBorder = Color(0x1FC2C8C1)
+val ClayShadow = Color(0x22181C19)
+val SpecularHighlight = Color(0xCCFFFFFF)
