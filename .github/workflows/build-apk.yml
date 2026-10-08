@@ -30,15 +30,23 @@ jobs:
       - name: Install Flutter Dependencies
         run: flutter pub get
 
-      - name: Make Gradle Wrapper Executable
+      - name: Configure Android SDK & Local Properties
         run: |
-          if [ -f "android/gradlew" ]; then
-            chmod +x android/gradlew
-          elif [ -f "gradlew" ]; then
+          mkdir -p android
+          echo "sdk.dir=$ANDROID_HOME" > android/local.properties
+          echo "flutter.sdk=$FLUTTER_ROOT" >> android/local.properties
+
+      - name: Ensure Gradle Wrapper Executable
+        run: |
+          if [ ! -f "android/gradlew" ] || [ ! -f "android/gradle/wrapper/gradle-wrapper.jar" ]; then
+            echo "Generating Gradle wrapper..."
+            cd android
+            gradle wrapper --gradle-version 8.14
+            cd ..
+          fi
+          chmod +x android/gradlew
+          if [ -f "gradlew" ]; then
             chmod +x gradlew
-          else
-            echo "::error::Gradle wrapper not found!"
-            false
           fi
 
       - name: Clean Stale Build Caches
