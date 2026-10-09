@@ -6,6 +6,7 @@ on:
     branches:
       - main
       - master
+      - jules-2555869236949869192-e9ce5460
 
 jobs:
   build:
@@ -30,21 +31,11 @@ jobs:
       - name: Install Flutter Dependencies
         run: flutter pub get
 
-      - name: Configure Android SDK & Local Properties
+      - name: Make Gradle Wrapper Executable
         run: |
-          mkdir -p android
-          echo "sdk.dir=$ANDROID_HOME" > android/local.properties
-          echo "flutter.sdk=$FLUTTER_ROOT" >> android/local.properties
-
-      - name: Ensure Gradle Wrapper Executable
-        run: |
-          if [ ! -f "android/gradlew" ] || [ ! -f "android/gradle/wrapper/gradle-wrapper.jar" ]; then
-            echo "Generating Gradle wrapper..."
-            cd android
-            gradle wrapper --gradle-version 8.14
-            cd ..
+          if [ -f "android/gradlew" ]; then
+            chmod +x android/gradlew
           fi
-          chmod +x android/gradlew
           if [ -f "gradlew" ]; then
             chmod +x gradlew
           fi
@@ -56,24 +47,18 @@ jobs:
           rm -rf .gradle
           rm -rf build
 
-      - name: Build Debug APK
-        run: |
-          if [ -d "android" ]; then
-            cd android
-            ./gradlew assembleDebug --stacktrace --no-daemon
-          elif [ -f "gradlew" ]; then
-            ./gradlew assembleDebug --stacktrace --no-daemon
-          else
-            echo "::error::Android project directory or Gradle wrapper missing."
-            false
-          fi
+      - name: Build Debug APK with Flutter
+        run: flutter build apk --debug
 
       - name: Locate and Verify Debug APK
         id: locate_apk
         run: |
-          APK_PATH=$(find . -type f -name "*.apk" | grep -i "debug" | head -n 1)
+          APK_PATH=$(find build/ -type f -name "*.apk" | grep -i "debug" | head -n 1)
           if [ -z "$APK_PATH" ]; then
-            echo "::error::No debug APK file found after Gradle build."
+            APK_PATH=$(find . -type f -name "*.apk" | grep -i "debug" | head -n 1)
+          fi
+          if [ -z "$APK_PATH" ]; then
+            echo "::error::No debug APK file found after Flutter build."
             false
           fi
           echo "Found APK at: $APK_PATH"
