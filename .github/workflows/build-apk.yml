@@ -4,9 +4,10 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
-      - master
-      - jules-2555869236949869192-e9ce5460
+      - '**'
+  pull_request:
+    branches:
+      - '**'
 
 jobs:
   build:
