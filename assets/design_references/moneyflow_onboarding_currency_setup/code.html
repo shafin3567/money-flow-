@@ -1,0 +1,363 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_stack" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#fcf9f4;color:#1c1c19;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}.clay-recessed{box-shadow:inset 2px 3px 6px rgba(184,175,161,0.45),inset -2px -2px 5px rgba(255,255,255,0.8);}.clay-card{box-shadow:6px 8px 18px rgba(199,190,175,0.35),-4px -4px 14px rgba(255,255,255,0.95),inset 1px 1px 2px rgba(255,255,255,0.8);}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary-fixed": "#cee5ff", "on-primary-fixed": "#002110", "surface": "#fcf9f4", "on-tertiary": "#ffffff", "tertiary-container": "#4d78a0", "error": "#ba1a1a", "outline": "#727972", "tertiary": "#325f86", "on-secondary": "#ffffff", "on-surface-variant": "#424843", "surface-container-lowest": "#ffffff", "secondary": "#8d4e2f", "background": "#fcf9f4", "surface-container-highest": "#e5e2dd", "primary-fixed-dim": "#abcfb5", "on-background": "#1c1c19", "tertiary-fixed-dim": "#9fcbf6", "on-surface": "#1c1c19", "secondary-fixed": "#ffdbcc", "outline-variant": "#c2c8c1", "primary-fixed": "#c6ecd0", "error-container": "#ffdad6", "on-primary-fixed-variant": "#2d4e39", "on-tertiary-fixed": "#001d33", "on-secondary-fixed": "#351000", "surface-tint": "#446650", "surface-container": "#f0ede9", "surface-variant": "#e5e2dd", "on-primary": "#ffffff", "inverse-surface": "#31302d", "on-secondary-fixed-variant": "#70371a", "secondary-fixed-dim": "#ffb695", "on-error-container": "#93000a", "inverse-primary": "#abcfb5", "surface-dim": "#dcdad5", "secondary-container": "#fdab85", "on-error": "#ffffff", "primary": "#42634d", "inverse-on-surface": "#f3f0eb", "on-tertiary-container": "#fcfcff", "surface-bright": "#fcf9f4", "surface-container-low": "#f6f3ee", "primary-container": "#5a7c65", "on-secondary-container": "#783d1f", "surface-container-high": "#ebe8e3", "on-tertiary-fixed-variant": "#194a6f", "on-primary-container": "#f5fff4" }, "borderRadius": { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, "spacing": { "space-xl": "2rem", "gutter": "1rem", "space-sm": "0.5rem", "space-xs": "0.25rem", "space-lg": "1.5rem", "margin": "1.25rem", "space-md": "1rem" }, "fontFamily": { "body-sm": ["Plus Jakarta Sans"], "body-lg": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "label-sm": ["Plus Jakarta Sans"], "headline-lg-mobile": ["Plus Jakarta Sans"], "numeric-hero": ["Plus Jakarta Sans"], "display-lg": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "display-lg-mobile": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"] }, "fontSize": { "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }], "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "numeric-hero": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "display-lg": ["44px", { "lineHeight": "52px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "display-lg-mobile": ["34px", { "lineHeight": "42px", "letterSpacing": "-0.025em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)]"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><button aria-label="Go back" class="w-11 h-11 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[22px]">arrow_back</span></button><img alt="MoneyFlow App Icon" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WBt7lq5gdr_fTNYTBTSVg62boC9z94mCVVf-SWTfbw61zg1asJsjDUJcO0WBM4ZsAcCROPFJe-FfXzf3ItU8v9kL6BYCXr-8Gg2FehvPBrVZuOSneDtxoN4kcuUmpSE3_N_cYJNZbzUMqFeRlLhunNIYERKBKmr3UNSLTl_hcA7oTD4Ar475VMcqkfr5oprSSi6b_-Knt2oxSoM4q9Fwr7Iw4Mf55lI3gQai9kUo2ccu7RXcCqLxJba1L8"><h1 class="font-headline-sm text-headline-sm text-on-surface tracking-tight">New Transaction</h1></div><div class="flex items-center gap-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-safe bg-surface"><div class="flex flex-col w-full pb-10 px-margin">
+<!-- Progress Header & Step Indicator -->
+<div class="flex flex-col gap-space-xs mt-space-sm mb-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">Setup Wizard</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-semibold">Step 2 of 3</span>
+</div>
+<div class="w-full h-2 rounded-full clay-recessed bg-surface-container overflow-hidden p-0.5">
+<div class="h-full bg-primary rounded-full transition-all duration-500 ease-out" style="width: 66.6%;"></div>
+</div>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">tune</span>
+<p class="font-label-md text-label-md text-on-surface-variant">Currency &amp; Regional Safeguards</p>
+</div>
+</div>
+<!-- Warm Clay Hero Illustration & Greeting -->
+<div class="clay-card rounded-lg bg-surface-container-lowest p-space-lg mb-space-lg relative overflow-hidden">
+<div class="relative z-10 flex flex-col items-center text-center">
+<!-- 3D Clay Vault & Coin Render Spot -->
+<div class="relative w-28 h-28 mb-space-sm flex items-center justify-center animate-float">
+<div class="absolute inset-0 rounded-full bg-primary-fixed/40 blur-xl"></div>
+<img class="w-24 h-24 object-contain relative z-10 drop-shadow-md" data-alt="Claymorphic 3D rendering of a charming pastel mint safe vault with smooth rounded edges, a tactile gold clay coin leaning against it, soft studio lighting, gentle drop shadows on warm ivory background, miniature ceramic finish" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPwPA67axddTiOsXwpeBxCVWbqDAeRAU8p624rStRv8ImyUHlqCdwL3gE0MzPVAvQ-TOteKALx60wZCFD97Sune4z49HEZAF22XOLjM-U6QMBZ7SY3JiWNc141KwQa8ZmX7lrWw2eta1ik3GfI6unECXyYNnvacmc9fnVf9TO9S5ENtHXd6OyJ_rTo5qAYzR3zNQu0ixJekYNyT-pT08YaaRr2CVnbIHI0bjUxb2ATX1orztHOyA6odQ">
+<div class="absolute -bottom-1 -right-1 bg-secondary-fixed text-on-secondary-container rounded-full px-2 py-0.5 font-label-sm text-label-sm shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">cloud_off</span>
+<span class="">Offline</span>
+</div>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface tracking-tight">Welcome to MoneyFlow</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-space-xs max-w-xs">
+        100% Offline-First. Your wealth records, transactions, and budgets never leave this device.
+      </p>
+<div class="flex items-center gap-2 mt-space-sm bg-surface-container-low px-3 py-1.5 rounded-full clay-recessed">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold tracking-wide uppercase">Zero Tracking • Local Storage Only</span>
+</div>
+</div>
+</div>
+<!-- Currency Selection Section -->
+<div class="flex flex-col gap-space-xs mb-space-lg">
+<div class="flex items-baseline justify-between">
+<label class="font-headline-sm text-headline-sm text-on-surface" for="currency-search">Choose Primary Currency</label>
+<span class="font-label-sm text-label-sm text-primary font-bold bg-primary-fixed/60 px-2 py-0.5 rounded-full">Base Standard</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+      ISO currency code used for aggregate totals and daily logs. Operates seamlessly without external exchange servers.
+    </p>
+<!-- Tactile Inset Search Bar -->
+<div class="relative mt-space-sm">
+<div class="clay-recessed bg-surface-container rounded-full flex items-center px-4 py-3 gap-2.5 transition-all focus-within:ring-2 focus-within:ring-primary/40 focus-within:bg-surface-container-lowest duration-200">
+<span class="material-symbols-outlined text-[20px] text-outline">search</span>
+<input class="w-full bg-transparent border-none outline-none font-body-md text-body-md text-on-surface placeholder:text-outline" id="currency-search" oninput="filterCurrencies(this.value)" placeholder="Search currencies (USD, EUR, GBP, JPY...)" type="text">
+<button aria-label="Clear search" class="text-outline hover:text-on-surface text-[18px] hidden items-center justify-center" id="clear-search-btn" onclick="clearSearch()" type="button">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+</button>
+</div>
+</div>
+<!-- Currency Clay Card Subgrid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm mt-space-sm" id="currency-grid"><!-- USD (Active Selected) -->
+<button class="currency-pill clay-recessed bg-surface-container-lowest text-left p-space-sm rounded-lg flex items-center justify-between transition-all duration-200 active:scale-[0.98]" data-code="USD" data-name="US Dollar" onclick="selectCurrency(this, 'USD')" type="button">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center shadow-inner transition-transform duration-200">
+<span class="font-headline-sm text-headline-sm text-on-primary-fixed font-bold">$</span>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">USD</span>
+<span class="font-label-sm text-label-sm bg-primary/10 text-primary px-1.5 py-0.5 rounded-full font-semibold">Default</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">US Dollar</p>
+</div>
+</div>
+<div class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm pop-check">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+</button>
+<!-- EUR -->
+<button class="currency-pill clay-card bg-surface-container-lowest text-left p-space-sm rounded-lg flex items-center justify-between transition-all duration-200 hover:scale-[1.01] active:scale-[0.98]" data-code="EUR" data-name="Euro" onclick="selectCurrency(this, 'EUR')" type="button">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center shadow-inner transition-transform duration-200">
+<span class="font-headline-sm text-headline-sm text-on-tertiary-fixed font-bold">€</span>
+</div>
+<div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">EUR</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Euro</p>
+</div>
+</div>
+<div class="w-7 h-7 rounded-full clay-recessed bg-surface-container flex items-center justify-center text-transparent transition-all duration-200">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+</button>
+<!-- GBP -->
+<button class="currency-pill clay-card bg-surface-container-lowest text-left p-space-sm rounded-lg flex items-center justify-between transition-all duration-200 hover:scale-[1.01] active:scale-[0.98]" data-code="GBP" data-name="British Pound" onclick="selectCurrency(this, 'GBP')" type="button">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center shadow-inner transition-transform duration-200">
+<span class="font-headline-sm text-headline-sm text-on-secondary-fixed font-bold">£</span>
+</div>
+<div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">GBP</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">British Pound</p>
+</div>
+</div>
+<div class="w-7 h-7 rounded-full clay-recessed bg-surface-container flex items-center justify-center text-transparent transition-all duration-200">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+</button>
+<!-- JPY -->
+<button class="currency-pill clay-card bg-surface-container-lowest text-left p-space-sm rounded-lg flex items-center justify-between transition-all duration-200 hover:scale-[1.01] active:scale-[0.98]" data-code="JPY" data-name="Japanese Yen" onclick="selectCurrency(this, 'JPY')" type="button">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-error-container flex items-center justify-center shadow-inner transition-transform duration-200">
+<span class="font-headline-sm text-headline-sm text-on-error-container font-bold">¥</span>
+</div>
+<div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">JPY</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Japanese Yen</p>
+</div>
+</div>
+<div class="w-7 h-7 rounded-full clay-recessed bg-surface-container flex items-center justify-center text-transparent transition-all duration-200">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+</button>
+<!-- CAD -->
+<button class="currency-pill clay-card bg-surface-container-lowest text-left p-space-sm rounded-lg flex items-center justify-between transition-all duration-200 hover:scale-[1.01] active:scale-[0.98]" data-code="CAD" data-name="Canadian Dollar" onclick="selectCurrency(this, 'CAD')" type="button">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center shadow-inner transition-transform duration-200">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">$</span>
+</div>
+<div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">CAD</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Canadian Dollar</p>
+</div>
+</div>
+<div class="w-7 h-7 rounded-full clay-recessed bg-surface-container flex items-center justify-center text-transparent transition-all duration-200">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+</button>
+<!-- AUD -->
+<button class="currency-pill clay-card bg-surface-container-lowest text-left p-space-sm rounded-lg flex items-center justify-between transition-all duration-200 hover:scale-[1.01] active:scale-[0.98]" data-code="AUD" data-name="Australian Dollar" onclick="selectCurrency(this, 'AUD')" type="button">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-primary-fixed-dim flex items-center justify-center shadow-inner transition-transform duration-200">
+<span class="font-headline-sm text-headline-sm text-on-primary-fixed-variant font-bold">$</span>
+</div>
+<div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">AUD</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Australian Dollar</p>
+</div>
+</div>
+<div class="w-7 h-7 rounded-full clay-recessed bg-surface-container flex items-center justify-center text-transparent transition-all duration-200">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+</button>
+<!-- INR -->
+<button class="currency-pill clay-card bg-surface-container-lowest text-left p-space-sm rounded-lg flex items-center justify-between transition-all duration-200 hover:scale-[1.01] active:scale-[0.98]" data-code="INR" data-name="Indian Rupee" onclick="selectCurrency(this, 'INR')" type="button">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed-dim flex items-center justify-center shadow-inner transition-transform duration-200">
+<span class="font-headline-sm text-headline-sm text-on-secondary-fixed-variant font-bold">₹</span>
+</div>
+<div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">INR</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Indian Rupee</p>
+</div>
+</div>
+<div class="w-7 h-7 rounded-full clay-recessed bg-surface-container flex items-center justify-center text-transparent transition-all duration-200">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+</button>
+<!-- CHF -->
+<button class="currency-pill clay-card bg-surface-container-lowest text-left p-space-sm rounded-lg flex items-center justify-between transition-all duration-200 hover:scale-[1.01] active:scale-[0.98]" data-code="CHF" data-name="Swiss Franc" onclick="selectCurrency(this, 'CHF')" type="button">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center shadow-inner transition-transform duration-200">
+<span class="font-label-lg text-label-lg text-on-surface font-bold">Fr</span>
+</div>
+<div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">CHF</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Swiss Franc</p>
+</div>
+</div>
+<div class="w-7 h-7 rounded-full clay-recessed bg-surface-container flex items-center justify-center text-transparent transition-all duration-200">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+</button>
+<!-- SGD -->
+<button class="currency-pill clay-card bg-surface-container-lowest text-left p-space-sm rounded-lg flex items-center justify-between transition-all duration-200 hover:scale-[1.01] active:scale-[0.98]" data-code="SGD" data-name="Singapore Dollar" onclick="selectCurrency(this, 'SGD')" type="button">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed-dim flex items-center justify-center shadow-inner transition-transform duration-200">
+<span class="font-headline-sm text-headline-sm text-on-tertiary-fixed-variant font-bold">$</span>
+</div>
+<div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">SGD</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Singapore Dollar</p>
+</div>
+</div>
+<div class="w-7 h-7 rounded-full clay-recessed bg-surface-container flex items-center justify-center text-transparent transition-all duration-200">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+</button></div>
+</div>
+<!-- Security & Keystore Card -->
+<div class="clay-card rounded-lg bg-surface-container-lowest p-space-lg mb-space-xl">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Quick Security Setup</h3>
+</div>
+<span class="font-label-sm text-label-sm text-outline uppercase font-semibold">Optional</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+      Protect sensitive ledgers from local eyes. Keys are locked in your device's isolated hardware enclave.
+    </p>
+<!-- Security Options -->
+<div class="flex flex-col gap-space-sm">
+<!-- Biometric Toggle -->
+<div class="flex items-center justify-between p-space-sm rounded-DEFAULT bg-surface-container-low">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined text-[20px]">fingerprint</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Biometric Unlock</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Face ID or Fingerprint</p>
+</div>
+</div>
+<!-- Tactile Switch -->
+<button aria-checked="true" class="w-14 h-8 rounded-full clay-recessed bg-primary/20 p-1 flex items-center transition-colors duration-200" onclick="toggleSwitch(this)" role="switch" type="button">
+<span class="w-6 h-6 rounded-full bg-primary clay-card translate-x-6 transform transition-transform duration-200 flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[12px]">check</span>
+</span>
+</button>
+</div>
+<!-- PIN Toggle -->
+<div class="flex items-center justify-between p-space-sm rounded-DEFAULT bg-surface-container-low">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined text-[20px]">pin</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">4-Digit PIN Lock</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Fallback device passcode</p>
+</div>
+</div>
+<!-- Tactile Switch (Off) -->
+<button aria-checked="false" class="w-14 h-8 rounded-full clay-recessed bg-surface-container p-1 flex items-center transition-colors duration-200" onclick="toggleSwitch(this)" role="switch" type="button">
+<span class="w-6 h-6 rounded-full bg-surface-container-lowest clay-card translate-x-0 transform transition-transform duration-200 flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-[12px]">lock</span>
+</span>
+</button>
+</div>
+</div>
+<!-- Hardware Keystore Badge -->
+<div class="mt-space-md pt-space-sm flex items-center gap-2 justify-center">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">security</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold tracking-wide">Hardware Keystore Protected (Secure Enclave)</span>
+</div>
+</div>
+<!-- Primary Action Area & Trust Footnote -->
+<div class="flex flex-col items-center gap-space-sm mb-space-md">
+<button class="group w-full clay-card bg-primary hover:bg-primary-container active:scale-[0.98] text-on-primary py-4 px-6 rounded-xl flex items-center justify-center gap-2 transition-all duration-200 shadow-md cursor-pointer" onclick="completeOnboarding()" type="button">
+<span class="font-headline-sm text-headline-sm font-bold">Complete Setup &amp; Launch</span>
+<span class="material-symbols-outlined text-[20px] group-hover-arrow transition-transform duration-200">arrow_forward</span>
+</button>
+<div class="flex items-center gap-1.5 text-center mt-1">
+<span class="material-symbols-outlined text-[14px] text-primary">privacy_tip</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-medium">
+        No account or signup needed • Private by design
+      </p>
+</div>
+</div>
+</div>
+<script>
+  function selectCurrency(element, code) {
+    const pills = document.querySelectorAll('.currency-pill');
+    pills.forEach(pill => {
+      pill.classList.remove('clay-recessed', 'bg-surface-container-lowest');
+      pill.classList.add('clay-card', 'bg-surface-container-lowest');
+      const badge = pill.querySelector('.w-7');
+      if (badge) {
+        badge.className = 'w-7 h-7 rounded-full clay-recessed bg-surface-container flex items-center justify-center text-transparent';
+      }
+    });
+
+    element.classList.remove('clay-card');
+    element.classList.add('clay-recessed');
+    const activeBadge = element.querySelector('.w-7');
+    if (activeBadge) {
+      activeBadge.className = 'w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm';
+    }
+  }
+
+  function toggleSwitch(btn) {
+    const isChecked = btn.getAttribute('aria-checked') === 'true';
+    const marble = btn.querySelector('span');
+    const icon = marble ? marble.querySelector('.material-symbols-outlined') : null;
+
+    if (isChecked) {
+      btn.setAttribute('aria-checked', 'false');
+      btn.classList.remove('bg-primary/20');
+      btn.classList.add('bg-surface-container');
+      if (marble) {
+        marble.classList.remove('translate-x-6', 'bg-primary', 'text-on-primary');
+        marble.classList.add('translate-x-0', 'bg-surface-container-lowest', 'text-outline');
+      }
+      if (icon) icon.textContent = 'lock';
+    } else {
+      btn.setAttribute('aria-checked', 'true');
+      btn.classList.remove('bg-surface-container');
+      btn.classList.add('bg-primary/20');
+      if (marble) {
+        marble.classList.remove('translate-x-0', 'bg-surface-container-lowest', 'text-outline');
+        marble.classList.add('translate-x-6', 'bg-primary', 'text-on-primary');
+      }
+      if (icon) icon.textContent = 'check';
+    }
+  }
+
+  function filterCurrencies(query) {
+    const clearBtn = document.getElementById('clear-search-btn');
+    if (clearBtn) {
+      clearBtn.style.display = query.trim() ? 'flex' : 'none';
+    }
+    const q = query.toLowerCase().trim();
+    const pills = document.querySelectorAll('.currency-pill');
+    pills.forEach(pill => {
+      const code = (pill.getAttribute('data-code') || '').toLowerCase();
+      const name = (pill.getAttribute('data-name') || '').toLowerCase();
+      if (!q || code.includes(q) || name.includes(q)) {
+        pill.classList.remove('hidden');
+        pill.classList.add('flex');
+      } else {
+        pill.classList.add('hidden');
+        pill.classList.remove('flex');
+      }
+    });
+  }
+
+  function clearSearch() {
+    const input = document.getElementById('currency-search');
+    if (input) {
+      input.value = '';
+      filterCurrencies('');
+      input.focus();
+    }
+  }
+
+  function completeOnboarding() {
+    const btn = event.currentTarget;
+    if (btn) {
+      btn.style.transform = 'scale(0.96)';
+      setTimeout(() => {
+        btn.style.transform = '';
+      }, 150);
+    }
+  }
+</script></main>
+
+</body></html>
