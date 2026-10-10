@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import '../core/theme/app_colors.dart';
 import '../widgets/moneyflow_clay_card.dart';
 import '../widgets/moneyflow_quick_action.dart';
+import '../widgets/travel_mode_card.dart';
+import '../widgets/daily_burn_allowance_card.dart';
+import '../widgets/burn_rate_card.dart';
+import '../widgets/savings_goal_card.dart';
 import '../services/database_service.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -43,38 +47,34 @@ class _HomeScreenState extends State<HomeScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: AppColors.recessedSurface,
-                              borderRadius: BorderRadius.circular(12),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: AppColors.recessedSurface,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Row(
+                          children: [
+                            Icon(Icons.lock, size: 12, color: AppColors.sagePrimary),
+                            SizedBox(width: 4),
+                            Text(
+                              "Encrypted Vault • 100% Offline",
+                              style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.slateStone),
                             ),
-                            child: const Row(
-                              children: [
-                                Icon(Icons.lock, size: 12, color: AppColors.sagePrimary),
-                                SizedBox(width: 4),
-                                Text(
-                                  "100% Offline",
-                                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.slateStone),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 6),
                       const Text(
                         "Good evening, Alex ✨",
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.warmCharcoal),
+                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.warmCharcoal),
                       ),
                     ],
                   ),
                   Row(
                     children: [
-                      IconButton(onPressed: () {}, icon: const Icon(Icons.notifications_outlined)),
-                      IconButton(onPressed: () {}, icon: const Icon(Icons.fingerprint)),
+                      IconButton(onPressed: () {}, icon: const Icon(Icons.notifications_outlined, color: AppColors.warmCharcoal)),
+                      IconButton(onPressed: () {}, icon: const Icon(Icons.fingerprint, color: AppColors.warmCharcoal)),
                     ],
                   )
                 ],
@@ -140,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 20),
 
-              // Quick Actions
+              // Quick Actions Row
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -170,6 +170,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
+              const SizedBox(height: 20),
+
+              // Travel Mode Card Widget
+              const TravelModeCard(),
+              const SizedBox(height: 16),
+
+              // Daily Burn Allowance Widget
+              const DailyBurnAllowanceCard(),
+              const SizedBox(height: 16),
+
+              // Monthly Burn Rate Widget
+              const BurnRateCard(),
+              const SizedBox(height: 16),
+
+              // Savings Goal Card Widget
+              const SavingsGoalCard(),
               const SizedBox(height: 20),
 
               // Recent Activity Header
@@ -209,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         CircleAvatar(
                           backgroundColor: isIncome ? AppColors.sageLight : AppColors.peachContainer,
                           child: Icon(
-                            isIncome ? Icons.arrow_downward : Icons.shopping_bag_outlined,
+                            isIncome ? Icons.payments_outlined : Icons.local_grocery_store_outlined,
                             color: isIncome ? AppColors.sagePrimary : AppColors.peachSecondary,
                           ),
                         ),
